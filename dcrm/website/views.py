@@ -8,6 +8,7 @@ def home(request):
     if request.method == "POST":
         username = request.POST.get('username')
         password = request.POST.get('password')
+        print(f"{username} {password}")
         # Authenticate
         user = authenticate(request, username=username, password=password)
         if user is not None:
@@ -24,4 +25,7 @@ def login_user(request):
     pass
 
 def logout_user(request):
-    pass
+    logout(request)
+    messages.success(request, "You have been logged out...")
+    return redirect('home')
+    
