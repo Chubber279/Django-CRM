@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1>Add Record</h1>
+
+<div class="col-md-6 offset-md-3">
+
+    <h1>Login</h1>
+    <br />
+    <form method="POST" action="{%url 'add_record' %}">
+        {% csrf_token %}
+        
+        {{ form.as_p}}
+            <div class="mb-3">
+              <input type="text" class="form-control" name="username" placeholder="First Name" required>
+              
+            </div>
+            <div class="mb-3">
+              <input type="password" class="form-control" name="password" placeholder="Password" required>
+            </div>
+           <br/>
+            <button type="submit" class="btn btn-secondary">Login</button>
+          
+    </form>
+    
+    </div>
+
+{% endblock %}
