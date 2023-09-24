@@ -60,7 +60,7 @@ def customer_record(request, pk):
     
 def delete_record(request, pk):
     if request.user.is_authenticated:
-        delete = Record.objects.get(pk)
+        delete = Record.objects.get(id=pk)
         delete.delete()
         messages.success(request, "Record Deleted Successfully.")
         return redirect('home')
@@ -77,6 +77,19 @@ def add_record(request):
                 messages.success(request, "Record Added")
                 return redirect("home")
         return render(request, 'add_record.html', {'form':form})
+    else:
+        messages.success(request, "You Must Be Logged in to do that")
+        return redirect('home')
+    
+def update_record(request, pk):
+    if request.user.is_authenticated:
+        current_record = Record.objects.get(id=pk)
+        form = AddRecordForm(request.POST or None, instance=current_record)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Record Has been updated")
+            return redirect("home")
+        return render(request, 'update_record.html', {'form':form})
     else:
         messages.success(request, "You Must Be Logged in to do that")
         return redirect('home')
